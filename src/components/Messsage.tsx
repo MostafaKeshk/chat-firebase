@@ -123,7 +123,9 @@ const Message: React.FC<IProps> = ({ message }) => {
     <Box sx={isSelf ? classes.selfContainer : classes.othersContainer}>
       {!isSelf && <Typography variant="subtitle1">{message.name}</Typography>}
       <Box sx={isSelf ? classes.self : classes.others}>
-        <Typography variant="body1">{message.text}</Typography>
+        <Typography variant="body1" sx={{ color: theme.palette.common.white }}>
+          {message.text}
+        </Typography>
       </Box>
       <Typography
         variant="subtitle2"

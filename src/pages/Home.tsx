@@ -1,23 +1,15 @@
-import {
-  Box,
-  Container,
-  Drawer,
-  IconButton,
-  TextField,
-  Toolbar,
-  Tooltip,
-} from "@mui/material";
+import { Box, Container, Toolbar } from "@mui/material";
 import withAuth from "../routes/withAuth";
-
 import AlertMessage from "../components/general/AlertMessage";
-import DrawerList from "../components/Layout/DrawerList";
 import AppBar from "../components/Layout/AppBar";
 import { useAlert } from "../contexts/AlertContext";
 import useHomeContainer from "../containers/useHomeContainer";
 import AlertDialog from "../components/general/AlertDialog";
 import FormikInput from "../components/form/FormikInput";
-import SendIcon from "@mui/icons-material/Send";
 import Room from "../components/Room";
+import Welcome from "../components/pages/home/Welcome";
+import MessageInput from "../components/pages/home/MessageInput";
+import Sidebar from "../components/pages/home/Sidebar";
 const Home = () => {
   const { value, msg, setValue, error } = useAlert();
   const drawerWidth = 300;
@@ -48,53 +40,17 @@ const Home = () => {
         handleDrawerToggle={handleDrawerToggle}
         drawerWidth={drawerWidth}
       />
-      <Box
-        component="nav"
-        sx={{ width: { sm: drawerWidth }, flexShrink: { sm: 0 } }}
-        aria-label="mailbox folders"
-      >
-        {/* The implementation can be swapped with js to avoid SEO duplication of links. */}
-        <Drawer
-          variant="temporary"
-          open={mobileOpen}
-          onClose={handleDrawerToggle}
-          ModalProps={{
-            keepMounted: true, // Better open performance on mobile.
-          }}
-          sx={{
-            display: { xs: "block", sm: "none" },
-            "& .MuiDrawer-paper": {
-              boxSizing: "border-box",
-              width: drawerWidth,
-            },
-          }}
-        >
-          <DrawerList
-            rooms={rooms}
-            handleSelectRoom={handleSelectRoom}
-            handleOpenRoom={() => setOpenDialog(true)}
-            selectedRoom={room}
-          />
-        </Drawer>
-        <Drawer
-          variant="permanent"
-          sx={{
-            display: { xs: "none", sm: "block" },
-            "& .MuiDrawer-paper": {
-              boxSizing: "border-box",
-              width: drawerWidth,
-            },
-          }}
-          open
-        >
-          <DrawerList
-            rooms={rooms}
-            handleSelectRoom={handleSelectRoom}
-            handleOpenRoom={() => setOpenDialog(true)}
-            selectedRoom={room}
-          />
-        </Drawer>
-      </Box>
+
+      <Sidebar
+        rooms={rooms}
+        room={room}
+        handleSelectRoom={handleSelectRoom}
+        setOpenDialog={setOpenDialog}
+        mobileOpen={mobileOpen}
+        handleDrawerToggle={handleDrawerToggle}
+        drawerWidth={drawerWidth}
+      />
+
       <Box
         component="main"
         sx={{
@@ -105,29 +61,18 @@ const Home = () => {
       >
         <Toolbar />
         <Container maxWidth="xl">
-          {!!room.id && (
-            <>
+          {!!room.id ? (
+            <Box>
               <Room roomMessages={roomMessages} ref={messagesEndRef} />
 
-              <Box sx={{ display: "flex" }}>
-                <TextField
-                  size="small"
-                  fullWidth
-                  value={messageText}
-                  onChange={(e: any) => setMessageText(e.target.value)}
-                />
-
-                <Tooltip title="Send">
-                  <IconButton
-                    onClick={handleSend}
-                    sx={{ ml: 0.5 }}
-                    disabled={!messageText}
-                  >
-                    <SendIcon color="primary" />
-                  </IconButton>
-                </Tooltip>
-              </Box>
-            </>
+              <MessageInput
+                messageText={messageText}
+                setMessageText={setMessageText}
+                handleSend={handleSend}
+              />
+            </Box>
+          ) : (
+            <Welcome />
           )}
         </Container>
       </Box>

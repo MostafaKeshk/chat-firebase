@@ -24,7 +24,9 @@ const Room: React.ForwardRefRenderFunction<RoomRef, IProps> = (
           <Box ref={ref} />
         </Box>
       ) : (
-        <ChatSvg />
+        <Box>
+          <ChatSvg height="80vh" width="100%" />
+        </Box>
       )}
     </>
   );

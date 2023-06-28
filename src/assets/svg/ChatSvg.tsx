@@ -1,14 +1,14 @@
 import { useTheme } from "@mui/material";
 import React from "react";
 
-function ChatSvg() {
+function ChatSvg({ height, width }: any) {
   const theme = useTheme();
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
-      width="842.73"
-      height="573"
       data-name="Layer 1"
+      height={height}
+      width={width}
       viewBox="0 0 842.73 573"
     >
       <path

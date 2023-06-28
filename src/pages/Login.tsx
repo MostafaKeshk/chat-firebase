@@ -108,7 +108,7 @@ const Login = () => {
           xs={12}
           lg={6}
           sx={{
-            display: "flex",
+            display: { xs: "none", lg: "flex" },
             height: "100vh",
           }}
         >
